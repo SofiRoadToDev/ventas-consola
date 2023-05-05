@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.besysoft.ventas.TestData.TestData;
 import com.besysoft.ventas.exceptions.AlreadyStoredObjectException;
+import com.besysoft.ventas.exceptions.ProductNotFoundException;
 import com.besysoft.ventas.modelos.Categorias;
 import com.besysoft.ventas.modelos.Producto;
 import com.besysoft.ventas.modelos.Vendedor;
@@ -46,6 +47,15 @@ public class Ventas {
             case 1:
                 addProducto();
                 break;
+            case 2:
+                addVendedor();
+                break;
+            case 3:
+                agregarVenta();
+                break;
+            case 4:
+                buscarProducto();
+                break;
             case 5:
                 sc.close();
                 salida=0;
@@ -74,6 +84,7 @@ public class Ventas {
        }
         int cat=sc.nextInt();
         p.setCategoría(Categorias.values()[cat]);
+        sc.nextLine();
         
         System.out.println("Desea guardar el producto? y/n");
 
@@ -132,17 +143,19 @@ public class Ventas {
                 "\n 5.Menu Principal");
 
         int option=sc.nextInt();
+        sc.nextLine();
+        try{
         switch(option){
             case 1:
                 System.out.println("Ingrese el codigo del producto");
                 String codigo=sc.nextLine();
-                ProductFilters.filtrarPorCodigo(codigo,TestData.getProductos()).forEach(p-> System.out.println(p.getNombre()));
+                System.out.println(ProductFilters.filtrarPorCodigo(codigo,TestData.getProductos()));
                 innerFilterMenu(sc);
                 break;
             case 2:
                 System.out.println("Ingrese el nombre del prroducto");
                 String nombre=sc.nextLine();
-                ProductFilters.filtrarPorNombre(nombre,TestData.getProductos()).forEach(p-> System.out.println(p.getNombre()));
+                System.out.println(ProductFilters.filtrarPorNombre(nombre,TestData.getProductos()).toString());
                 innerFilterMenu(sc);
                 break;
             case 3:
@@ -154,8 +167,10 @@ public class Ventas {
             case 4:
                 System.out.println("Ingrese desde que monto buscar");
                 double desde=sc.nextDouble();
+                sc.nextLine();
                 System.out.println("Ingrese hasta que precio buscar");
                 double hasta=sc.nextDouble();
+                sc.nextLine();
                 ProductFilters.filtrarPorRangoPrecio(desde,hasta,TestData.getProductos()).forEach(p-> System.out.println(p.getNombre()));
                 innerFilterMenu(sc);
                 break;
@@ -163,6 +178,11 @@ public class Ventas {
                 sc.close();
                 mainMenu();
                 break;
+            default:
+                System.out.println("Por favor ingrese una opcion valida");
+                break;
+        }}catch(ProductNotFoundException e){
+            System.out.println(e);
         }
 
     }
@@ -172,13 +192,16 @@ public class Ventas {
         System.out.println("Desea buscar productos con otro filtro? y/n");
         String op=sc.nextLine().toLowerCase();
         if(op.equals("y")){
-            sc.close();
             buscarProducto();
         }else{
             sc.close();
             mainMenu();
         }
 
+
+    }
+
+    public static void agregarVenta(){
 
     }
 

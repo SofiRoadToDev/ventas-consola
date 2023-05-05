@@ -47,8 +47,13 @@ public class Producto {
     @Override
     public boolean equals(Object p) {
         if(this==p)return true;
-        if(p==null|| this.getClass() != p.getClass())return false;
+        if(p==null || this.getClass() != p.getClass())return false;
         Producto pro= (Producto) p;
-        return this.nombre.equals(((Producto) p).nombre);
+        return this.nombre.equals(pro.nombre);
+    }
+
+    @Override
+    public String toString() {
+        return this.codigo +this.nombre;
     }
 }

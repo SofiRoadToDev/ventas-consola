@@ -50,6 +50,20 @@ public class TestData {
       productos.add(p2);
       productos.add(p3);
       productos.add(p4);
+
+
+      Vendedor v=new Vendedor();
+      v.setCodigo("v1");
+      v.setNombre("Juan");
+      v.setSueldo(100000);
+
+      Vendedor v2=new Vendedor();
+      v.setCodigo("v2");
+      v.setNombre("Mariana");
+      v.setSueldo(150000);
+
+      vendedores.add(v);
+      vendedores.add(v2);
   }
 
 
@@ -62,6 +76,7 @@ public class TestData {
       if (productos.contains(p)) {
           throw new AlreadyStoredObjectException(String.format(" El producto %s ya existe",p.getNombre()));
       }else{
+          System.out.println(productos.contains(p));
       productos.add(p);}
   }
 
