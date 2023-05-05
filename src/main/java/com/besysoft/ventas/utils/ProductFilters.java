@@ -24,9 +24,9 @@ public class ProductFilters {
 
     public static Producto filtrarPorCodigo(String codigo, List<Producto> lista)throws ProductNotFoundException{
 
-        int tamanio=lista.stream().filter(p->p.getCodigo().equals(codigo)).collect(Collectors.toList()).size();
-        if(tamanio>0){
-            return lista.stream().filter(p->p.getCodigo().equals(codigo)).collect(Collectors.toList()).get(0);
+        List<Producto>pros=lista.stream().filter(p->p.getCodigo().equals(codigo.toUpperCase())).collect(Collectors.toList());
+        if(pros.size()>0){
+            return lista.stream().filter(p->p.getCodigo().equals(codigo.toUpperCase())).collect(Collectors.toList()).get(0);
         }else{
             throw new ProductNotFoundException("producto no encontrado");
         }
@@ -46,9 +46,9 @@ public class ProductFilters {
     }
 
     public static Producto filtrarPorNombre(String nombre, List<Producto> lista)throws ProductNotFoundException {
-       Producto pro=lista.stream().filter(p->p.equals(nombre)).collect(Collectors.toList()).get(0);
-            if(pro!=null){
-                return pro;
+       List<Producto> pro=lista.stream().filter(p->p.equals(nombre)).collect(Collectors.toList());
+            if(pro.size()>0){
+                return pro.get(0);
             }else {
                 throw new ProductNotFoundException("producto no encontrado");
             }

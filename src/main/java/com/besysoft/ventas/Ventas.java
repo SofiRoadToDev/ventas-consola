@@ -21,7 +21,7 @@ public class Ventas {
     public static void main(String[] args) {
 
         TestData.initData();
-        
+
             do{
                 mainMenu();
             }while(salida!=0);
