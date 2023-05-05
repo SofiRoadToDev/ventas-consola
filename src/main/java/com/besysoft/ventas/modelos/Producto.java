@@ -7,7 +7,7 @@ public class Producto {
     
     private String nombre;
     
-    private String categoría;
+    private Categorias categoría;
     
     private double precio;
 
@@ -27,11 +27,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getCategoría() {
+    public Categorias getCategoría() {
         return categoría;
     }
 
-    public void setCategoría(String categoría) {
+    public void setCategoría(Categorias categoría) {
         this.categoría = categoría;
     }
 
@@ -42,9 +42,13 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-    
-    
-    
-    
-    
+
+
+    @Override
+    public boolean equals(Object p) {
+        if(this==p)return true;
+        if(p==null|| this.getClass() != p.getClass())return false;
+        Producto pro= (Producto) p;
+        return this.nombre.equals(((Producto) p).nombre);
+    }
 }

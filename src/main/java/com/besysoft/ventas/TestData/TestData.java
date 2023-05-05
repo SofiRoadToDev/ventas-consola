@@ -3,6 +3,9 @@ package com.besysoft.ventas.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.besysoft.ventas.exceptions.AlreadyStoredObjectException;
+import com.besysoft.ventas.modelos.Categorias;
 import com.besysoft.ventas.modelos.Producto;
 import com.besysoft.ventas.modelos.Vendedor;
 import com.besysoft.ventas.modelos.Venta;
@@ -15,12 +18,51 @@ public class TestData {
 
 
 
+
+
+
+  public static void initData(){
+      Producto p=new Producto();
+      p.setCategoría(Categorias.LACTEOS);
+      p.setCodigo("L1");
+      p.setNombre("yogurt");
+      p.setPrecio(250.00);
+
+      Producto p2=new Producto();
+      p2.setCategoría(Categorias.LACTEOS);
+      p2.setCodigo("L2");
+      p2.setNombre("queso");
+      p2.setPrecio(600.00);
+
+      Producto p3=new Producto();
+      p.setCategoría(Categorias.ROPA);
+      p.setCodigo("R1");
+      p.setNombre("remera");
+      p.setPrecio(5000.00);
+
+      Producto p4=new Producto();
+      p.setCategoría(Categorias.ROPA);
+      p.setCodigo("R2");
+      p.setNombre("pantalon");
+      p.setPrecio(8000.00);
+
+      productos.add(p);
+      productos.add(p2);
+      productos.add(p3);
+      productos.add(p4);
+  }
+
+
+
   public static List<Producto>getProductos(){
       return productos;
   }
 
-  public static void agregarProducto(Producto p){
-      productos.add(p);
+  public static void agregarProducto(Producto p) throws AlreadyStoredObjectException{
+      if (productos.contains(p)) {
+          throw new AlreadyStoredObjectException(String.format(" El producto %s ya existe",p.getNombre()));
+      }else{
+      productos.add(p);}
   }
 
   public static void agregarVenta(Venta venta){
