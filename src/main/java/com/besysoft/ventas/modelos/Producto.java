@@ -31,7 +31,7 @@ public class Producto {
         return categoría;
     }
 
-    public void setCategoría(Categorias categoría) {
+    public void setCategoria(Categorias categoría) {
         this.categoría = categoría;
     }
 
@@ -54,6 +54,8 @@ public class Producto {
 
     @Override
     public String toString() {
-        return this.codigo +this.nombre;
+        return this.codigo +" "+this.nombre;
     }
+
+
 }

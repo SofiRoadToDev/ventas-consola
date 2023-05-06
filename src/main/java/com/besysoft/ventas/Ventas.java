@@ -1,15 +1,15 @@
 
 package com.besysoft.ventas;
 
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.besysoft.ventas.TestData.TestData;
 import com.besysoft.ventas.exceptions.AlreadyStoredObjectException;
 import com.besysoft.ventas.exceptions.ProductNotFoundException;
-import com.besysoft.ventas.modelos.Categorias;
-import com.besysoft.ventas.modelos.Producto;
-import com.besysoft.ventas.modelos.Vendedor;
+import com.besysoft.ventas.modelos.*;
 import com.besysoft.ventas.utils.ProductFilters;
 
 
@@ -39,7 +39,8 @@ public class Ventas {
                   + "\n 2. Agregar Vendedor"
                   + " \n 3. Agregar Venta "
                   + "\n 4.Buscar Producto "
-                  + "\n 5.Salir");
+                  + "\n 5.ver ventas"
+                  +"\n 6.salir");
           
        mainMenuOption=sc.nextInt();
         
@@ -57,13 +58,27 @@ public class Ventas {
                 buscarProducto();
                 break;
             case 5:
+                consultarVentas();
+                break;
+            case 6:
                 sc.close();
                 salida=0;
-               
+               break;
+            default:
+                System.out.println("Ingrese una opción válida");
         }
     }
     
-    
+
+
+
+    public static void consultarVentas(){
+        TestData.getVentas().forEach(v-> System.out.println(v.toString()+"\n"));
+        System.out.println(" volver atras y/n?");
+        if(sc.nextLine().toLowerCase().equals("y")){
+            mainMenu();
+        }
+    }
     public static void addProducto(){
         Producto p=new Producto();
         Scanner sc=new Scanner(System.in);
@@ -83,7 +98,7 @@ public class Ventas {
            System.out.println(String.format("%s. %S",i,Categorias.values()[i]));
        }
         int cat=sc.nextInt();
-        p.setCategoría(Categorias.values()[cat]);
+        p.setCategoria(Categorias.values()[cat]);
         sc.nextLine();
         
         System.out.println("Desea guardar el producto? y/n");
@@ -174,6 +189,7 @@ public class Ventas {
                 ProductFilters.filtrarPorRangoPrecio(desde,hasta,TestData.getProductos()).forEach(p-> System.out.println(p.getNombre()));
                 innerFilterMenu(sc);
                 break;
+
             case 5:
                 sc.close();
                 mainMenu();
@@ -201,10 +217,65 @@ public class Ventas {
 
     }
 
-    public static void agregarVenta(){
+    public static void agregarProductosAVenta(List<DetalleVenta>dv,Scanner sc){
+        int stop=-1;
+
+        while(stop!=0){
+
+            System.out.println("Elija un producto ");
+            for (int i=0;i<TestData.getProductos().size();i++){
+                System.out.println(i+". "+TestData.getProductos().get(i).getNombre()+ " c/u $"+TestData.getProductos().get(i).getPrecio());
+            }
+            int op=sc.nextInt();
+            sc.nextLine();
+
+            System.out.println("Elija la cantidad a comprar");
+            int cantidad=sc.nextInt();
+            sc.nextLine();
+
+            dv.add(new DetalleVenta(TestData.getProductos().get(op),cantidad));
+
+            System.out.println("desea agregar mas productos? y/n");
+            stop=sc.nextLine().toLowerCase().equals("y")?-1:0;
+        }
+
 
     }
 
+    public static void agregarVenta(){
+        Venta venta=new Venta();
+        List<DetalleVenta> dv=new ArrayList<>();
+        Scanner sc=new Scanner(System.in);
+        agregarProductosAVenta(dv,sc);
+        System.out.println("Confirma los productos agregados? y/n");
+        dv.forEach(d-> System.out.println(d.getProducto()+" cant: "+d.getCantidad()+" total: $"+d.getProducto().getPrecio()*d.getCantidad()));
+        if(sc.nextLine().toLowerCase().equals("y")){
+            venta.setProductos(dv);
+        }else{
+            dv.clear();
+            agregarProductosAVenta(dv,sc);
+        }
+
+        System.out.println("Elija el vendedor que realizo la venta");
+        for (int i=0;i<TestData.getVendedores().size();i++){
+            System.out.println(i+". "+TestData.getVendedores().get(i).getNombre());
+        }
+        int selectedV=sc.nextInt();
+        sc.nextLine();
+        Vendedor v=TestData.getVendedores().get(selectedV);
+        venta.setVendedor(v);
+        venta.setFecha(LocalDate.now());
+        venta.calcularImporteYComision();
+        System.out.println("comision : "+venta.getComisionVendedor());
+
+        System.out.println("Desea confirmar la venta y/n?");
+        if(sc.nextLine().toLowerCase().equals("y")){
+            TestData.agregarVenta(venta);
+            System.out.println(TestData.getVentas().size());
+        }else{
+            mainMenu();
+        }
+    }
 
 
 }

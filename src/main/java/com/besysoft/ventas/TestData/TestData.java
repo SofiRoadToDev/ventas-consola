@@ -17,34 +17,30 @@ public class TestData {
   private static List<Venta>ventas=new ArrayList<>();
 
 
-
-
-
-
   public static void initData(){
       Producto p=new Producto();
-      p.setCategoría(Categorias.LACTEOS);
+      p.setCategoria(Categorias.LACTEOS);
       p.setCodigo("L1");
       p.setNombre("yogurt");
       p.setPrecio(250.00);
 
       Producto p2=new Producto();
-      p2.setCategoría(Categorias.LACTEOS);
+      p2.setCategoria(Categorias.LACTEOS);
       p2.setCodigo("L2");
       p2.setNombre("queso");
       p2.setPrecio(600.00);
 
       Producto p3=new Producto();
-      p.setCategoría(Categorias.ROPA);
-      p.setCodigo("R1");
-      p.setNombre("remera");
-      p.setPrecio(5000.00);
+      p3.setCategoria(Categorias.ROPA);
+      p3.setCodigo("R1");
+      p3.setNombre("remera");
+      p3.setPrecio(5000.00);
 
       Producto p4=new Producto();
-      p.setCategoría(Categorias.ROPA);
-      p.setCodigo("R2");
-      p.setNombre("pantalon");
-      p.setPrecio(8000.00);
+      p4.setCategoria(Categorias.ROPA);
+      p4.setCodigo("R2");
+      p4.setNombre("pantalon");
+      p4.setPrecio(8000.00);
 
       productos.add(p);
       productos.add(p2);
@@ -58,9 +54,9 @@ public class TestData {
       v.setSueldo(100000);
 
       Vendedor v2=new Vendedor();
-      v.setCodigo("v2");
-      v.setNombre("Mariana");
-      v.setSueldo(150000);
+      v2.setCodigo("v2");
+      v2.setNombre("Mariana");
+      v2.setSueldo(150000);
 
       vendedores.add(v);
       vendedores.add(v2);
@@ -87,5 +83,13 @@ public class TestData {
   public static void agregarVendedor(Vendedor v){
       vendedores.add(v);
   }
+
+  public static List<Vendedor>getVendedores(){
+      return vendedores;
+  }
+
+  public static List<Venta> getVentas(){
+      return ventas;
+    }
     
 }
