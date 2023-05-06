@@ -2,6 +2,7 @@
 package com.besysoft.ventas.modelos;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.UnsupportedTemporalTypeException;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Venta {
     
     
-    private LocalDate fecha;
+    private LocalDateTime fecha;
     
     private Vendedor vendedor;
     
@@ -21,25 +22,35 @@ public class Venta {
     List<DetalleVenta>productos=new ArrayList();
     
     public void calcularImporteYComision(){
-        //Revisar que el detalle puede tener mas de un producto sin cambiar el tamaño del arreglo
+       int cantidadProductos=productos.stream().map(d->d.getCantidad()).reduce(0,(a,b)->a+b);
+        System.out.println("Cantidad productos: "+cantidadProductos);
        productos.forEach(d -> {
             this.importe+=d.getCantidad()*d.getProducto().getPrecio();
         });
-        if(productos.size()>0 && productos.size()<=2){
+
+        if(cantidadProductos>0 && cantidadProductos<=2){
             this.comisionVendedor=importe*0.05;
 
-        }else if(productos.size()>2){
+        }else if(cantidadProductos>2){
            comisionVendedor=importe*0.1;
         }
        // System.out.println("importe: "+importe+" comision: "+comisionVendedor);
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public double getImporte() {
+        return importe;
+    }
+
+    public void setImporte(double importe) {
+        this.importe = importe;
     }
 
     public Vendedor getVendedor() {
@@ -69,8 +80,8 @@ public class Venta {
     @Override
     public String toString()  {
         return "Venta{" +
-                "\nfecha= " + fecha +
-                ", \nvendedor= " + vendedor +
+                "\nfecha= " + DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss").format(fecha).toString() +
+                ", \nvendedor= " + vendedor.getNombre() +
                 ", \ncomisionVendedor= " + comisionVendedor +
                 ", \nimporte= " + importe +
                 ", \ncantidad de productos= " + productos.size() +

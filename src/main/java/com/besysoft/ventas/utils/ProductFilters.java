@@ -13,7 +13,7 @@ public class ProductFilters {
 
     public static List<Producto>filtrarPorCategoria(String categoria, List<Producto> lista)throws ProductNotFoundException{
         List<Producto>prods= lista.stream()
-                .filter(p->p.getCategoría().equals(categoria.toUpperCase()))
+                .filter(p->p.getCategoría().toString().equals(categoria.toUpperCase()))
                 .collect(Collectors.toList());
         if(prods.size()>0){
             return prods;
@@ -46,7 +46,7 @@ public class ProductFilters {
     }
 
     public static Producto filtrarPorNombre(String nombre, List<Producto> lista)throws ProductNotFoundException {
-       List<Producto> pro=lista.stream().filter(p->p.equals(nombre)).collect(Collectors.toList());
+       List<Producto> pro=lista.stream().filter(p->p.getNombre().equals(nombre.toLowerCase())).collect(Collectors.toList());
             if(pro.size()>0){
                 return pro.get(0);
             }else {

@@ -2,6 +2,7 @@
 package com.besysoft.ventas;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -191,7 +192,6 @@ public class Ventas {
                 break;
 
             case 5:
-                sc.close();
                 mainMenu();
                 break;
             default:
@@ -264,7 +264,7 @@ public class Ventas {
         sc.nextLine();
         Vendedor v=TestData.getVendedores().get(selectedV);
         venta.setVendedor(v);
-        venta.setFecha(LocalDate.now());
+        venta.setFecha(LocalDateTime.now());
         venta.calcularImporteYComision();
         System.out.println("comision : "+venta.getComisionVendedor());
 

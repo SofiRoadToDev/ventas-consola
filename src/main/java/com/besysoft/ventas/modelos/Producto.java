@@ -54,7 +54,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return this.codigo +" "+this.nombre;
+        return "cod: "+this.codigo +" nombre: "+this.nombre+" precio: "+this.precio+" categoria: "+this.categoría;
     }
 
 
