@@ -23,16 +23,6 @@ public class Ventas {
     public static void main(String[] args) {
 
         TestData.initData();
-        int a=1;
-        int b=3;
-        int c=3;
-        if(a==b && b==c){
-            System.out.println("equilatero");
-        }else if(a!=b && a!=c && b!=c){
-            System.out.println("escaleno");
-        }else{
-            System.out.println("isosceles");
-        }
 
             do{
                 MenusLogicMethods.mainMenu();
