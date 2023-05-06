@@ -70,6 +70,7 @@ public class TestData {
 
   public static void agregarProducto(Producto p) throws AlreadyStoredObjectException{
       if (productos.contains(p)) {
+          System.out.println(String.format("resultado de contains %s",productos.contains(p)));
           throw new AlreadyStoredObjectException(String.format(" El producto %s ya existe",p.getNombre()));
       }else{
           System.out.println(productos.contains(p));

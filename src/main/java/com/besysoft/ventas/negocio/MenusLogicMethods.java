@@ -45,7 +45,6 @@ public class MenusLogicMethods {
                 consultarVentas();
                 break;
             case 6:
-                sc.close();
                 salida=0;
                 break;
             default:
@@ -97,10 +96,8 @@ public class MenusLogicMethods {
             }
 
         }else{
-            sc.close();
             mainMenu();
         }
-
     }
 
     public static void elegirCategoria(){
@@ -112,6 +109,7 @@ public class MenusLogicMethods {
         Scanner sc=new Scanner(System.in);
 
         System.out.println("Ingrese el codigo del vendedor: ");
+
         v.setCodigo(sc.nextLine().toLowerCase());
 
         System.out.println("Ingrese el nombre del vendedor: ");
